@@ -19,7 +19,7 @@ app.get('/:id', (req, res) => {
     res.json({ mensagem: `PEGAR SOMENTE O REGISTRO COM O ID: ${id}` });
 });
 
-// CRIAR REGISTRO
+// CRIAR REGISTRO.
 app.post('/', (req, res) => {
     const body = req.body;
     res.json(body);
