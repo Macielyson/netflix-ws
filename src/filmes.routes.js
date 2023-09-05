@@ -5,14 +5,26 @@ const Filme = require('./models/filme');
 
 // CRIANDO AS ROTAS.
 // PEGAR TODOS OS REGISTROS
-router.get('/', (req, res) => {
-    res.json({ mensagem: 'Rota Funcionando' });
+router.get('/', async (req, res) => {
+    try {
+        const filmes = await Filme.find({});// a chave é para filtrar alguns parametros
+        res.json({ error: false, filmes });
+
+    } catch (err) {
+        res.json({ error: true, message: err.message });
+    }
 });
 
 // PEGAR SOMENTE O REGISTRO COM O ID
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    res.json({ mensagem: `PEGAR SOMENTE O REGISTRO COM O ID: ${id}` });
+router.get('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const filme = await Filme.findById(id);
+        res.json({ error: false, filme });
+    } catch (err) {
+        res.json({ error: true, message: err.message });
+
+    }
 });
 
 // CRIAR REGISTRO.
@@ -27,16 +39,30 @@ router.post('/', async (req, res) => { //
 });
 
 // ATUALIZAR SOMENTE O REGISTRO COM O ID
-router.put('/:id', (req, res) => {
-    const id = req.params.id;
-    res.json({ mensagem: `ATUALIZAR SOMENTE O REGISTRO COM O ID: ${id}` });
+router.put('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const novo_filme = req.body;
+        const filme = await Filme.findByIdAndUpdate(id, novo_filme);
+        res.json({ error: false, filme });
+
+    } catch (err) {
+        res.json({ error: true, message: err.message });
+    }
 });
 
 
 // DELETE SOMENTE O REGISTRO COM O ID
-router.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    res.json({ mensagem: `DELETAR SOMENTE O REGISTRO COM O ID: ${id}` });
+router.delete('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Filme.findByIdAndDelete(id);
+        res.json({ error: false });
+    } catch (err) {
+        res.json({ error: true, message: err.message });
+
+    }
+
 });
 
 module.exports = router;
