@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Filme = require('./models/filme');
+const Filme = require('../models/filme');
 
 
 // CRIANDO AS ROTAS.
